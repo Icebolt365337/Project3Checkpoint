@@ -2,12 +2,16 @@
 <html lang="en">
 <head>
     <title>Volcanoes By Amount of Sulfur Dioxide Emission, Per Year</title>
+    <h1>Volcanoes By Amount of Sulfur Dioxide Emission (kilotons), Per Year</h1>
     <div class="slidecontainer">
         <input type="range" min="1978" max="2025" value="1978" class="slider" id="myRange">
         <p>Year: <span id="demo"></span></p>
     </div>
     <div id="map-container">
         <svg></svg>
+        <div id="hoverbox" style="visibility: hidden; position: absolute; background-color: white; border: 1px solid black; padding: 10px; pointer-events: none;">
+            <!-- Content will be inserted here by JavaScript -->
+        </div>
     </div>
     <script src="global.js" type="module"></script>
 </head>

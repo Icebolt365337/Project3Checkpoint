@@ -34,6 +34,8 @@ function loadAndPlotCSVData() {
     d3.csv("data/data.csv").then(function(data) {
         // Filter out invalid data points if necessary
         const validData = data.filter(d => d['yyyy'] == year);
+        validData.sort((a,b) => b['so2(kt)']-a['so2(kt)']);
+        console.log(validData);
 
         var svg = d3.select("svg");
         svg.selectAll(".data-point").remove();
@@ -50,8 +52,28 @@ function loadAndPlotCSVData() {
                 // Project latitude and longitude to screen coordinates
                 const coords = projection([+d.lon, +d.lat]);
                 return `translate(${coords[0]},${coords[1]})`;
+            })
+            .attr("data-info", d => d);
+    })
+
+    const hoverBox = document.getElementById('hoverBox');
+
+    d3.selectAll("circle")
+            .on('mouseover', (event) => {
+                const circleInfo = event.target.getAttribute('data-info');
+                    if (circleInfo) {
+                        hoverBox.innerHTML = circleInfo;
+                        hoverBox.style.display = 'block';
+
+                        // Position the hover box near the mouse or circle
+                        // Adjust offsets as needed for desired positioning
+                        hoverBox.style.left = (event.pageX + 10) + 'px';
+                        hoverBox.style.top = (event.pageY + 10) + 'px';
+                    }
+            })
+            .on('mouseout', () => {
+                hoverBox.style.display = 'none';
             });
-    });
 }
 
 var slider = document.getElementById("myRange");
